@@ -3,12 +3,27 @@ import Pokemon from './Pokemon';
 import PropTypes from 'prop-types';
 
 class Pokedex extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      selectedPokemon: 0
+    }
+  }
+
+  next = () => {
+    const { selectedPokemon } = this.state;
+    this.setState(prevState => ({
+      selectedPokemon: prevState.selectedPokemon +1
+    }))
+  }
+
   render() {
+    const { pokemons } = this.props;
+    const { selectedPokemon } = this.state;
     return (
-      <div className="pokedex">
-        {this.props.pokemons.map((pokemon) => (
-          <Pokemon key={pokemon.id} pokemon={pokemon} />
-        ))}
+      <div>
+        <Pokemon pokemon={pokemons[selectedPokemon]} />
+        <button onClick={this.next}>Next</button>
       </div>
     );
   }
